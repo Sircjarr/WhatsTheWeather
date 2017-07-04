@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WhatsTheWeather</string>
+    <string name="title_activity_weather_display">WeatherDisplayActivity</string>
 </resources>

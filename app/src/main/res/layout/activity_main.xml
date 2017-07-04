@@ -36,33 +36,6 @@
         android:onClick="getWeather"
         android:text="What's the weather" />
 
-    <TextView
-        android:id="@+id/resultNameText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/weatherButton"
-        android:layout_marginTop="30dp"
-        android:layout_toLeftOf="@+id/weatherButton"
-        android:layout_toStartOf="@+id/weatherButton"
-        android:gravity="center"
-        android:textColor="@android:color/background_dark"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/resultWeatherText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/resultNameText"
-        android:layout_marginTop="50dp"
-        android:gravity="top|center"
-        android:textColor="@android:color/background_light"
-        android:textSize="25sp"
-        tools:textColor="@android:color/black" />
-
 
 </RelativeLayout
    >
