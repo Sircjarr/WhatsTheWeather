@@ -19,6 +19,8 @@ import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ListView favoritesListView;
     static ArrayList<String> favorites;
     static ArrayAdapter<String> arrayAdapter;
+    static Set<String> set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +38,36 @@ public class MainActivity extends AppCompatActivity {
         inputWeatherText = (EditText) findViewById(R.id.cityInputText);
         favoritesListView = (ListView) findViewById(R.id.favoritesListView);
 
-        favorites = new ArrayList<>();
-        favorites.add("Tulsa");
+        // Retrieve saved data
+        SharedPreferences sp = this.getSharedPreferences("com.example.cliff.whatstheweather", Context.MODE_PRIVATE);
+        set = new HashSet<String>();
+        set = sp.getStringSet("favorites", null);
 
+        // Create ArrayList<String> favorites from saved data
+        if (set == null) {
+            favorites = new ArrayList<>();
+        }
+        else {
+            favorites = new ArrayList<String> (set);
+        }
+
+        // Set the adapter for ArrayList<String> favorites
         arrayAdapter = new ArrayAdapter<>(this, R.layout.list_white_text, favorites);
         favoritesListView.setAdapter(arrayAdapter);
 
+        // Add listeners to favoritesListView
         favoritesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // Go to WeatherDisplayActivity to lookup weather data for newCityName
                 Intent intent = new Intent(getApplicationContext(), WeatherDisplayActivity.class);
                 intent.putExtra("newCityName", favorites.get(position));
                 startActivity(intent);
             }
         });
 
+        // Holding down on an item in the ListView will prompt a dialog box
         favoritesListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id) {
@@ -65,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
                              public void onClick(DialogInterface dialogInterface, int i) {
                                  favorites.remove(itemToDelete);
                                  arrayAdapter.notifyDataSetChanged();
+
+                                 // Code to convert ArrayList<String> favorites to a serializable HashSet<String> and store in sharedPreferences
+                                 SharedPreferences sp = getApplicationContext().getSharedPreferences("com.example.cliff.whatstheweather", Context.MODE_PRIVATE);
+                                 Set<String> set = new HashSet<>(MainActivity.favorites);
+                                 sp.edit().putStringSet("favorites", set).apply();
                              }
                          })
                          .setNegativeButton("No", null)
@@ -88,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // Account for spaces in the URL by encoding the input
                 String newCityName = URLEncoder.encode(cityName, "UTF-8");
+
                 Intent intent = new Intent(this, WeatherDisplayActivity.class);
                 intent.putExtra("newCityName", newCityName);
                 startActivity(intent);
