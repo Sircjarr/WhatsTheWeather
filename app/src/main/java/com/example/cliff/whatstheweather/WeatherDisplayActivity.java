@@ -3,12 +3,10 @@ package com.example.cliff.whatstheweather;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,25 +24,16 @@ public class WeatherDisplayActivity extends AppCompatActivity {
 
     TextView weatherTextView;
     TextView cityTextView;
+    Button favoriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather_display);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setContentView(R.layout.content_weather_display);
 
         weatherTextView = (TextView) findViewById(R.id.weatherTextView);
         cityTextView = (TextView) findViewById(R.id.cityTextView);
+        favoriteButton = (Button) findViewById(R.id.favoriteButton);
 
         Intent intent = getIntent();
         String newCityName = intent.getStringExtra("newCityName");
@@ -58,6 +47,8 @@ public class WeatherDisplayActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Could not find weather", Toast.LENGTH_LONG).show();
         }
+
+
     }
 
     private class DownloadTask extends AsyncTask<String, Void, String> {
@@ -133,6 +124,13 @@ public class WeatherDisplayActivity extends AppCompatActivity {
 
                 // Display data on the UI
                 cityTextView.setText(name);
+                if (!MainActivity.favorites.contains(name)) {
+                    favoriteButton.setText("Favorite");
+                }
+                else {
+                    favoriteButton.setText("Unfavorite");
+                }
+
                 String weatherText =
                         description + "\r\n\n"
                                 + "Temperature: " + String.format("%.4s", String.valueOf(temperature)) + (char)0x00b0 + "F\r\n"
@@ -150,6 +148,21 @@ public class WeatherDisplayActivity extends AppCompatActivity {
 
     public static double kelvinToF(double kelvins) {
         return (1.8 * (kelvins - 273)) + 32;
+    }
+
+    public void addOrRemoveFavorite(View view) {
+        if(favoriteButton.getText().toString().equals("Favorite")) {
+            favoriteButton.setText("Unfavorite");
+            MainActivity.favorites.add(cityTextView.getText().toString());
+            MainActivity.arrayAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            favoriteButton.setText("Favorite");
+            MainActivity.favorites.remove(cityTextView.getText().toString());
+            MainActivity.arrayAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cliff.whatstheweather.MainActivity">
+    tools:context="com.example.cliff.whatstheweather.MainActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ImageView
         android:id="@+id/imageView"
@@ -35,6 +37,15 @@
         android:layout_centerHorizontal="true"
         android:onClick="getWeather"
         android:text="What's the weather" />
+
+    <ListView
+        android:id="@+id/favoritesListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/weatherButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:textColor="@android:color/background_light" />
 
 
 </RelativeLayout
