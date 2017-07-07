@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             favorites = new ArrayList<String> (set);
         }
 
-        // Set the adapter for ArrayList<String> favorites
+        // Set the adapter with the custom layout for ArrayList<String> favorites
         arrayAdapter = new ArrayAdapter<>(this, R.layout.list_white_text, favorites);
         favoritesListView.setAdapter(arrayAdapter);
 
