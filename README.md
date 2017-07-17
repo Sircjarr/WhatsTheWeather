@@ -4,8 +4,10 @@ An app that retrieves the current weather of a specified city anywhere in the wo
 <h3>Features:</h3>
 <ul>
   <li>Retrieving and displaying data from <a href="https://openweathermap.org/api">https://openweathermap.org/api</a></li>
-  <li>Custom ListView for favorites</li>
-  <li>Permanent data storage</li>
+  <li>Permanent data storage with SharedPreferences</li>
+  <li>Image downloads</li>
+  <li>Custom layout for the favorites ListView </li>
+  <li>Parsing JSON</li>
   <li>Separate activities</li>
   <li>Cool design</li>
 </ul>
