@@ -8,7 +8,7 @@ An app that retrieves the current weather of a specified city anywhere in the wo
   <li>Image downloads</li>
   <li>Custom layout for the favorites ListView </li>
   <li>Parsing JSON</li>
-  <li>Separate activities</li>
+  <li>Displaying date</li>
   <li>Cool design</li>
 </ul>
   
