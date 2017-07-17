@@ -25,7 +25,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class WeatherDisplayActivity extends AppCompatActivity {
@@ -34,6 +37,7 @@ public class WeatherDisplayActivity extends AppCompatActivity {
     TextView descriptionTextView;
     ImageView weatherIcon;
     TextView weatherTextView;
+    TextView dateTextView;
 
     Button favoriteButton;
 
@@ -47,6 +51,7 @@ public class WeatherDisplayActivity extends AppCompatActivity {
         weatherIcon = (ImageView) findViewById(R.id.weatherIcon);
         weatherTextView = (TextView) findViewById(R.id.weatherTextView);
         favoriteButton = (Button) findViewById(R.id.favoriteButton);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
 
         // Retrieve newCityName String variable from MainActivity
         Intent intent = getIntent();
@@ -62,6 +67,12 @@ public class WeatherDisplayActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Could not find weather", Toast.LENGTH_LONG).show();
         }
+
+        // Set the date
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE MM-dd-yyyy", Locale.getDefault());
+        Date d = new Date();
+        String date = sdf.format(d);
+        dateTextView.setText(date);
     }
 
     // Class Asynchronous Task allows separate thread execution for resource-heavy operations
